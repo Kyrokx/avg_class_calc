@@ -24,9 +24,29 @@ Moyene: 8.53, 10.45, 15.5, 15.23, 5.89, 18.33
 */
 
 int main(void) {
-    char *students[6] = {"Ali", "Malik", "Sarah", "Alice", "Fred", "Gael"};
-    float note[6] = {8.53, 10.45, 15.5, 15.23, 5.89, 18.33};
-    float avg = 0;
+    char *students[] = {
+        "Ali", "Malik", "Sarah", "Alice", "Fred", "Gael",
+        "Tom", "Emma", "Lucas", "Lina", "Noah", "Chloe",
+        "Ethan", "Mia", "Leo", "Sophia", "Adam", "Julia",
+        "Max", "Olivia", "Ryan", "Isla", "Liam", "Ella",
+        "Nathan", "Zoe", "Oscar", "Lily", "Ben", "Hannah"
+    };
+
+    float note[] = {
+        12.5, 14.0, 10.25, 9.0, 15.0, 18.33,
+        11.0, 13.5, 16.75, 14.25, 9.5, 17.0,
+        8.0, 12.75, 15.5, 13.0, 10.0, 11.25,
+        14.5, 16.0, 12.0, 9.75, 15.25, 10.5,
+        13.0, 18.0, 14.75, 11.5, 16.25, 12.5
+    };
+
+
+    int stud_el = sizeof(students) / sizeof(students[0]);
+    int note_el = sizeof(note) / sizeof(note[0]);
+
+
+    float avg = 0.0;
+    float sum = 0.0;
 
     float max = note[0]; // On utilise la premiere valeur comme pivot
     float min = note[0]; // On utilise la premiere valeur comme pivot
@@ -35,27 +55,28 @@ int main(void) {
 
 
     // Message de bienvenue
-    printf("Bienvenue dans le calculateur de moyenne de la classe IT1 en C\n");
+    printf("Bienvenue dans le calculateur de moyenne de la classe IT1 en C\n\n");
 
+    if (note_el != stud_el) {
+        printf("Le nombre d'etudiants est different de celui des notes !\n");
+    } else {
+        for (int i = 0; i < note_el; i++) {
+            sum += note[i]; // Sommation de toutes les notes
+            max = max > note[i] ? max : note[i]; // Recherche de la plus forte note
+            min = min < note[i] ? min : note[i]; // Recherche de la plus faible note note
 
-    // Calcul de la moyenne de la classe
-    for (int i = 0; i < 6; i++) { avg += note[i]; }
-
-    // Calcul de la plus faible moyenne et la plus fort
-    for (int i = 0; i < 6; i++) { max = max > note[i] ? max : note[i]; }
-    for (int i = 0; i < 6; i++) { min = min < note[i] ? min : note[i]; }
-
-    // Calcul du taux de reussite
-    for (int i = 0; i < 6; i++)
-    {
-        if (note[i] > 10.0) {
-            avg_reached++;
+            // Les etudiants qui ont la moyenne
+            if (note[i] > 10.0) {
+                avg_reached++;
+            }
         }
-    }
 
-    printf("La plus forte moyenne est : %.2f\nLa plus faible moyenne est : %.2f\n", max, min);
-    printf("La moyenne de la classe est : %.2f \n", (avg / 6));
-    printf("Le taux de reussite est de %.2f%%\n", (float) avg_reached*100/6);
+        avg = sum / 30;
+
+        printf("La plus forte moyenne est : %.2f\nLa plus faible moyenne est : %.2f\n", max, min);
+        printf("La moyenne de la classe est : %.2f \n", avg);
+        printf("Le taux de reussite est de %.2f%%\n", (float) avg_reached * 100 / 6);
+    }
 
 
     return 0;
